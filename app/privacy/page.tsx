@@ -93,12 +93,12 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-xl font-semibold text-[#1e3a5f]">Contact Us</h2>
             <p className="mt-2 leading-relaxed">
-              If you have any questions about this Privacy Policy, contact us at{" "}
+              If you have any questions about this Privacy Policy, visit our{" "}
               <a
-                href="mailto:hello@directoriesnetwork.com"
+                href="/contact"
                 className="font-medium text-[#0d9488] hover:text-[#1e3a5f]"
               >
-                hello@directoriesnetwork.com
+                Contact page
               </a>
               .
             </p>

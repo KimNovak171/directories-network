@@ -1,3 +1,7 @@
+"use client";
+
+import { FormEvent, useMemo, useState } from "react";
+
 type Directory = {
   name: string;
   domain: string;
@@ -93,7 +97,79 @@ const tiers: Tier[] = [
 
 const stats = ["50 Directories", "8 Currently Live", "US & Canada Coverage", "Growing Daily"];
 
+type FormData = {
+  name: string;
+  email: string;
+  directory: string;
+  message: string;
+};
+
+type FormErrors = Partial<Record<keyof FormData, string>>;
+
 export default function Home() {
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    email: "",
+    directory: "",
+    message: "",
+  });
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+
+  const directoryOptions = useMemo(
+    () => ["General Inquiry", ...tiers.flatMap((tier) => tier.directories.map((directory) => directory.name))],
+    [],
+  );
+
+  const validateForm = (): FormErrors => {
+    const nextErrors: FormErrors = {};
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!formData.name.trim()) nextErrors.name = "Name is required.";
+    if (!formData.email.trim()) nextErrors.email = "Email is required.";
+    else if (!emailPattern.test(formData.email.trim())) nextErrors.email = "Enter a valid email.";
+    if (!formData.directory) nextErrors.directory = "Please select a directory.";
+    if (!formData.message.trim()) nextErrors.message = "Message is required.";
+
+    return nextErrors;
+  };
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setSubmitError("");
+    setSubmitSuccess(false);
+
+    const nextErrors = validateForm();
+    setErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) return;
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch("https://formspree.io/f/xbdznngq", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Form submission failed.");
+      }
+
+      setSubmitSuccess(true);
+      setFormData({ name: "", email: "", directory: "", message: "" });
+      setErrors({});
+    } catch {
+      setSubmitError("We could not submit your request right now. Please email hello@directoriesnetwork.com.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white text-slate-800">
       <main className="mx-auto w-full max-w-7xl px-4 pb-12 pt-10 sm:px-6 lg:px-8">
@@ -169,11 +245,10 @@ export default function Home() {
         <section className="mt-14 rounded-2xl border border-[#1e3a5f]/15 bg-[#f8fbfd] p-6 sm:p-8">
           <h2 className="text-2xl font-bold text-[#1e3a5f] sm:text-3xl">About Directories Network</h2>
           <p className="mt-4 leading-relaxed text-slate-700">
-            Directories Network is operated by Stonecreek Stationery Inc. We build and maintain
-            specialized online directories connecting people across the United States and Canada
-            with trusted local professionals in healthcare, wellness, and home services. Our
-            directories are free to use and updated regularly with verified listings sourced from
-            Google Maps.
+            Directories Network builds and maintains specialized online directories connecting
+            people across the United States and Canada with trusted local professionals in
+            healthcare, wellness, and home services. Our directories are free to use and updated
+            regularly with verified listings sourced from Google Maps.
           </p>
         </section>
 
@@ -184,24 +259,112 @@ export default function Home() {
             monthly placement options for practitioners who want maximum visibility in their city
             and state.
           </p>
-          <a
-            href="mailto:hello@directoriesnetwork.com"
-            className="mt-6 inline-flex rounded-lg bg-[#0d9488] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#1e3a5f]"
-          >
-            Contact hello@directoriesnetwork.com
-          </a>
+
+          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+            <div>
+              <label htmlFor="name" className="mb-1 block text-sm font-medium text-[#1e3a5f]">
+                Name
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                value={formData.name}
+                onChange={(event) => setFormData((prev) => ({ ...prev, name: event.target.value }))}
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none focus:border-[#0d9488] focus:ring-2 focus:ring-[#0d9488]/20"
+                required
+              />
+              {errors.name ? <p className="mt-1 text-sm text-red-600">{errors.name}</p> : null}
+            </div>
+
+            <div>
+              <label htmlFor="email" className="mb-1 block text-sm font-medium text-[#1e3a5f]">
+                Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={(event) => setFormData((prev) => ({ ...prev, email: event.target.value }))}
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none focus:border-[#0d9488] focus:ring-2 focus:ring-[#0d9488]/20"
+                required
+              />
+              {errors.email ? <p className="mt-1 text-sm text-red-600">{errors.email}</p> : null}
+            </div>
+
+            <div>
+              <label htmlFor="directory" className="mb-1 block text-sm font-medium text-[#1e3a5f]">
+                Which directory are you contacting us about?
+              </label>
+              <select
+                id="directory"
+                name="directory"
+                value={formData.directory}
+                onChange={(event) => setFormData((prev) => ({ ...prev, directory: event.target.value }))}
+                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-slate-900 outline-none focus:border-[#0d9488] focus:ring-2 focus:ring-[#0d9488]/20"
+                required
+              >
+                <option value="" disabled>
+                  Select an option
+                </option>
+                {directoryOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+              {errors.directory ? <p className="mt-1 text-sm text-red-600">{errors.directory}</p> : null}
+            </div>
+
+            <div>
+              <label htmlFor="message" className="mb-1 block text-sm font-medium text-[#1e3a5f]">
+                Message
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                rows={5}
+                value={formData.message}
+                onChange={(event) => setFormData((prev) => ({ ...prev, message: event.target.value }))}
+                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-slate-900 outline-none focus:border-[#0d9488] focus:ring-2 focus:ring-[#0d9488]/20"
+                required
+              />
+              {errors.message ? <p className="mt-1 text-sm text-red-600">{errors.message}</p> : null}
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="inline-flex rounded-lg bg-[#0d9488] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#1e3a5f] disabled:cursor-not-allowed disabled:opacity-70"
+            >
+              {isSubmitting ? "Submitting..." : "Submit"}
+            </button>
+          </form>
+
+          {submitSuccess ? (
+            <p className="mt-4 text-sm font-medium text-emerald-700">
+              Thank you! We will be in touch within 1 business day.
+            </p>
+          ) : null}
+          {submitError ? <p className="mt-4 text-sm font-medium text-red-600">{submitError}</p> : null}
         </section>
       </main>
 
       <footer className="border-t border-slate-200 bg-slate-50 px-4 py-6 sm:px-6 lg:px-8">
         <div className="mx-auto flex w-full max-w-7xl flex-col gap-2 text-sm text-slate-700 sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 Directories Network | Stonecreek Stationery Inc.</p>
-          <a
-            href="mailto:hello@directoriesnetwork.com"
-            className="font-medium text-[#0d9488] hover:text-[#1e3a5f]"
-          >
-            hello@directoriesnetwork.com
-          </a>
+          <p>© 2026 Directories Network</p>
+          <div className="flex flex-wrap items-center gap-4">
+            <a href="/privacy" className="font-medium text-[#0d9488] hover:text-[#1e3a5f]">
+              Privacy Policy
+            </a>
+            <a
+              href="mailto:hello@directoriesnetwork.com"
+              className="font-medium text-[#0d9488] hover:text-[#1e3a5f]"
+            >
+              hello@directoriesnetwork.com
+            </a>
+          </div>
         </div>
       </footer>
     </div>

@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Directories Network | 50 Specialized Directories",
+  title: "Directories Network | Specialized Local Business Directories",
   description:
-    "Directories Network connects patients, families, and communities with trusted local professionals across 50 specialized directories in the US and Canada.",
+    "Free directories connecting people across the United States and Canada with trusted local businesses and service providers. Listings verified via Google Maps.",
   metadataBase: new URL("https://directoriesnetwork.com"),
   alternates: {
     canonical: "/",

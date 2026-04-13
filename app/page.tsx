@@ -1,97 +1,57 @@
 type Directory = {
   name: string;
   domain: string;
-  isLive?: boolean;
 };
 
-type Tier = {
+type Category = {
   heading: string;
   directories: Directory[];
 };
 
-const tiers: Tier[] = [
+const categories: Category[] = [
   {
-    heading: "LIVE NOW",
+    heading: "Beauty & Personal Care",
     directories: [
-      { name: "Daycare Directories", domain: "daycaredirectories.com", isLive: true },
-      { name: "Senior Living Directories", domain: "seniorlivingdirectories.com", isLive: true },
-      { name: "Mental Health Directories", domain: "mentalhealthdirectories.com", isLive: true },
-      { name: "Auto Repair Directories", domain: "autorepairdirectories.com", isLive: true },
-      { name: "Speech Therapy Directories", domain: "speechtherapydirectories.com", isLive: true },
-      {
-        name: "Occupational Therapy Directories",
-        domain: "occupationaltherapydirectories.com",
-        isLive: true,
-      },
-      { name: "Pediatrician Directories", domain: "pediatriciandirectories.com", isLive: true },
-      { name: "Family Doctor Directories", domain: "familydoctordirectories.com", isLive: true },
+      { name: "Hair Salon Directories", domain: "hairsalondirectories.com" },
+      { name: "Nail Salon Directories", domain: "nailsalondirectories.com" },
+      { name: "Barber Shop Directories", domain: "barbershopdirectories.com" },
+      { name: "Medical Spa Directories", domain: "medicalspadirectories.com" },
+      { name: "Tattoo Shop Directories", domain: "tattooshopdirectories.com" },
     ],
   },
   {
-    heading: "TIER 1 — Medical & Dental",
+    heading: "Health & Wellness",
     directories: [
-      { name: "Dentistry Directories", domain: "dentistrydirectories.com" },
-      { name: "Urgent Care Directories", domain: "urgentcaredirectories.com" },
+      { name: "Daycare Directories", domain: "daycaredirectories.com" },
+      { name: "Senior Living Directories", domain: "seniorlivingdirectories.com" },
+      { name: "Mental Health Directories", domain: "mentalhealthdirectories.com" },
+      { name: "Speech Therapy Directories", domain: "speechtherapydirectories.com" },
+      {
+        name: "Occupational Therapy Directories",
+        domain: "occupationaltherapydirectories.com",
+      },
+      { name: "Pediatrician Directories", domain: "pediatriciandirectories.com" },
+      { name: "Family Doctor Directories", domain: "familydoctordirectories.com" },
       { name: "Chiropractor Directories", domain: "chiropractordirectories.com" },
       { name: "OB/GYN Directories", domain: "obgyndirectories.com" },
       { name: "Plastic Surgeon Directories", domain: "plasticsurgeondirectories.com" },
       { name: "Fertility Clinic Directories", domain: "fertilityclinicdirectories.com" },
       { name: "Neurologist Directories", domain: "neurologistdirectories.com" },
       { name: "Urologist Directories", domain: "urologistdirectories.com" },
-      { name: "Orthopedic Surgeon Directories", domain: "orthopedicsurgeondirectories.com" },
-      { name: "Oncologist Directories", domain: "oncologistdirectories.com" },
-      { name: "Neurosurgeon Directories", domain: "neurosurgeondirectories.com" },
-      { name: "Pain Management Directories", domain: "painmanagementdirectories.com" },
     ],
   },
   {
-    heading: "TIER 2 — Specialists",
+    heading: "Medical & Dental",
     directories: [
-      { name: "Cardiologist Directories", domain: "cardiologistdirectories.com" },
-      { name: "Dermatologist Directories", domain: "dermatologistdirectories.com" },
-      { name: "Gastroenterologist Directories", domain: "gastroenterologistdirectories.com" },
-      { name: "Ophthalmologist Directories", domain: "ophthalmologistdirectories.com" },
-      { name: "Allergist Directories", domain: "allergistdirectories.com" },
-      { name: "Audiologist Directories", domain: "audiologistdirectories.com" },
-      { name: "Orthodontist Directories", domain: "orthodontistdirectories.com" },
-      { name: "Psychologist Directories", domain: "psychologistdirectories.com" },
-      { name: "Addiction Treatment Directories", domain: "addictiontreatmentdirectories.com" },
-      { name: "Sleep Clinic Directories", domain: "sleepclinicdirectories.com" },
-      { name: "Rheumatologist Directories", domain: "rheumatologistdirectories.com" },
-      { name: "Endocrinologist Directories", domain: "endocrinologistdirectories.com" },
-      { name: "Sports Medicine Directories", domain: "sportsmedicinedirectories.com" },
-      { name: "Vascular Surgeon Directories", domain: "vascularsurgeondirectories.com" },
-      { name: "Radiologist Directories", domain: "radiologistdirectories.com" },
-      { name: "Otolaryngologist Directories", domain: "otolaryngologistdirectories.com" },
+      { name: "Dentistry Directories", domain: "dentistrydirectories.com" },
+      { name: "Urgent Care Directories", domain: "urgentcaredirectories.com" },
     ],
   },
   {
-    heading: "TIER 3 — Health & Wellness",
-    directories: [
-      { name: "Veterinarian Directories", domain: "veterinariandirectories.com" },
-      { name: "Physical Therapy Directories", domain: "physicaltherapydirectories.com" },
-      { name: "Home Care Directories", domain: "homecaredirectories.com" },
-      { name: "Acupuncturist Directories", domain: "acupuncturistdirectories.com" },
-      { name: "Massage Therapist Directories", domain: "massagetherapistdirectories.com" },
-      { name: "Podiatrist Directories", domain: "podiatristdirectories.com" },
-      { name: "Optometrist Directories", domain: "optometristdirectories.com" },
-      { name: "Nutritionist Directories", domain: "nutritionistdirectories.com" },
-      { name: "Weight Loss Directories", domain: "weightlossdirectories.com" },
-      { name: "Prosthetist Directories", domain: "prosthetistdirectories.com" },
-    ],
-  },
-  {
-    heading: "TIER 4 — Home & Community",
-    directories: [
-      { name: "Tutoring Directories", domain: "tutoringdirectories.com" },
-      { name: "Landscaping Directories", domain: "landscapingdirectories.com" },
-      { name: "Plumber Directories", domain: "plumberdirectories.com" },
-      { name: "Electrician Directories", domain: "electriciandirectories.com" },
-    ],
+    heading: "Auto Services",
+    directories: [{ name: "Auto Repair Directories", domain: "autorepairdirectories.com" }],
   },
 ];
-
-const stats = ["50 Directories", "8 Currently Live", "US & Canada Coverage", "Growing Daily"];
 
 export default function Home() {
   return (
@@ -102,63 +62,34 @@ export default function Home() {
             Directories Network
           </p>
           <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-            50 Specialized Directories Across North America
+            Specialized Local Business Directories Across North America
           </h1>
           <p className="mt-4 max-w-3xl text-base leading-relaxed text-white/90 sm:text-lg">
-            Connecting patients, families, and communities with trusted local professionals
+            Free to use directories connecting people across the United States and Canada with
+            trusted local businesses and service providers
           </p>
-        </section>
-
-        <section className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {stats.map((stat) => (
-            <div
-              key={stat}
-              className="rounded-xl border border-[#1e3a5f]/15 bg-[#f8fbfd] px-4 py-5 text-center shadow-sm"
-            >
-              <p className="text-base font-semibold text-[#1e3a5f]">{stat}</p>
-            </div>
-          ))}
         </section>
 
         <section className="mt-12">
           <h2 className="text-2xl font-bold text-[#1e3a5f] sm:text-3xl">Directory Network</h2>
           <div className="mt-6 space-y-10">
-            {tiers.map((tier) => (
-              <div key={tier.heading}>
-                <h3 className="text-lg font-bold tracking-wide text-[#0d9488]">{tier.heading}</h3>
+            {categories.map((category) => (
+              <div key={category.heading}>
+                <h3 className="text-lg font-bold tracking-wide text-[#0d9488]">
+                  {category.heading}
+                </h3>
                 <div className="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                  {tier.directories.map((directory) => (
-                    <article
+                  {category.directories.map((directory) => (
+                    <a
                       key={directory.domain}
-                      className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md"
+                      href={`https://${directory.domain}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-[#0d9488]/40 hover:shadow-md"
                     >
-                      <div className="flex items-start justify-between gap-3">
-                        <h4 className="text-base font-semibold text-[#1e3a5f]">{directory.name}</h4>
-                        <span
-                          className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-bold ${
-                            directory.isLive
-                              ? "bg-emerald-100 text-emerald-700"
-                              : "bg-slate-100 text-slate-600"
-                          }`}
-                        >
-                          {directory.isLive ? "Live" : "Coming Soon"}
-                        </span>
-                      </div>
-                      <p className="mt-3 text-sm text-slate-600">
-                        {directory.isLive ? (
-                          <a
-                            href={`https://${directory.domain}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="font-medium text-[#0d9488] hover:text-[#1e3a5f]"
-                          >
-                            {directory.domain}
-                          </a>
-                        ) : (
-                          <span className="font-medium">{directory.domain}</span>
-                        )}
-                      </p>
-                    </article>
+                      <h4 className="text-base font-semibold text-[#1e3a5f]">{directory.name}</h4>
+                      <p className="mt-3 text-sm font-medium text-[#0d9488]">{directory.domain}</p>
+                    </a>
                   ))}
                 </div>
               </div>
@@ -169,27 +100,11 @@ export default function Home() {
         <section className="mt-14 rounded-2xl border border-[#1e3a5f]/15 bg-[#f8fbfd] p-6 sm:p-8">
           <h2 className="text-2xl font-bold text-[#1e3a5f] sm:text-3xl">About Directories Network</h2>
           <p className="mt-4 leading-relaxed text-slate-700">
-            Directories Network builds and maintains specialized online directories connecting
-            people across the United States and Canada with trusted local professionals in
-            healthcare, wellness, and home services. Our directories are free to use and updated
-            regularly with verified listings sourced from Google Maps.
+            Directories Network builds and maintains specialized online directories connecting people
+            across the United States and Canada with trusted local businesses and service providers.
+            Our directories are free to use and updated regularly with verified listings sourced from
+            Google Maps.
           </p>
-        </section>
-
-        <section className="mt-10 rounded-2xl border border-[#0d9488]/20 bg-white p-6 shadow-sm sm:p-8">
-          <h2 className="text-2xl font-bold text-[#1e3a5f] sm:text-3xl">List Your Practice</h2>
-          <p className="mt-4 leading-relaxed text-slate-700">
-            Interested in a featured or premium listing across our network? We offer affordable
-            monthly placement options for practitioners who want maximum visibility in their city
-            and state.
-          </p>
-
-          <a
-            href="/contact"
-            className="mt-6 inline-flex rounded-lg bg-[#0d9488] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#1e3a5f]"
-          >
-            Contact Us
-          </a>
         </section>
       </main>
 

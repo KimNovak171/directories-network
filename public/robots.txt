@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://directoriesnetwork.com/sitemap.xml
